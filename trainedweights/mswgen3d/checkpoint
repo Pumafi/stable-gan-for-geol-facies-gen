@@ -1,0 +1,2 @@
+model_checkpoint_path: "cp-gen2d_horizontal_good.ckpt"
+all_model_checkpoint_paths: "cp-gen2d_horizontal_good.ckpt"

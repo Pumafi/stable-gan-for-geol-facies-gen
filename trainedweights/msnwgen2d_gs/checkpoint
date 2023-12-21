@@ -1,0 +1,2 @@
+model_checkpoint_path: "cp-msnwgen_maxsort_horizontal_good.ckpt"
+all_model_checkpoint_paths: "cp-msnwgen_maxsort_horizontal_good.ckpt"

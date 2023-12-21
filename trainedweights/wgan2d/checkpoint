@@ -1,0 +1,2 @@
+model_checkpoint_path: "cp-wgan2d_horiz.ckpt"
+all_model_checkpoint_paths: "cp-wgan2d_horiz.ckpt"

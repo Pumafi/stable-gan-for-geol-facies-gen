@@ -1,0 +1,2 @@
+model_checkpoint_path: "cp-snwgen_horizontal_good.ckpt"
+all_model_checkpoint_paths: "cp-snwgen_horizontal_good.ckpt"

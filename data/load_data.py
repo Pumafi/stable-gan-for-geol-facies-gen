@@ -13,13 +13,9 @@ def get_3d_flumy_data(filename="../data/3D/dataFlumy3D.csv", data_file='../data/
         os.mkdir(data_file)
 
     # Download data
-    if not os.path.exists(dataset):
-        r = requests.get("https://cloud.mines-paristech.fr/index.php/s/G4l6fHfMhWOucyj/download?path=%2F&files"
-                         "=dataFlumy3D_20slices_3000img.csv.zip")
-        z = zipfile.ZipFile(io.BytesIO(r.content))
-        z.extractall(data_file)
-
-    data = pd.read_csv(filename, sep=',').values
+    r = requests.get("https://soft.mines-paristech.fr/flumy-gan/data/dataFlumy3D.csv")
+    content = r.content.decode('utf8')
+    data = pd.read_csv(io.StringIO(content)).values
 
     if max_simulation_nb is not None:
         # To use if the whole dataset doesn't fit in RAM

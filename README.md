@@ -4,14 +4,6 @@
 
 # A stable deep adversarial learning approach for geological facies generation
 
-## Table of contents
-
-1. [Links and contact](links-and-contact)
-2. [Abstract](abstract)
-3. [Usage](usage)
-4. [Abbreviations](abbreviations)
-5. [Technical details and requirements](technical-details-and-requirements)
-
 ## Links and contact
 
 ArXiv : https://arxiv.org/abs/2305.13318

@@ -9,5 +9,5 @@ keras~=2.7.0
 mayavi~=4.7.4
 requests~=2.22.0
 gstlearn~=0.1.27
-seaborn~=0.11.2
+seaborn~=0.12.2
 deel.lip

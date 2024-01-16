@@ -1,6 +1,14 @@
 import tensorflow as tf
 from models.progan_normalization import pix_norm
 
+###########################################################
+#                                                         #
+#                Multi-Scale GENERATOR                    #
+#                                                         #
+#          This model is not SOTA, and is here for        #
+#                   comparison purposes                   #
+#                                                         #
+###########################################################
 
 class GeneratorInitial(tf.keras.layers.Layer):
     # First layer of the Multi-Scale Generator

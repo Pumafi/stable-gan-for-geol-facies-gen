@@ -2,10 +2,30 @@ import tensorflow as tf
 from tensorflow import keras
 from models.progan_normalization import MinibatchStdev
 
+###########################################################
+#                                                         #
+#                Multi-Scale DISCRIMINATOR                #
+# add_noise=True can be used as a stabilisation technique #
+#              that adds Gaussian Noise                   #
+#                                                         #
+#          This model is not SOTA, and is here for        #
+#                   comparison purposes                   #
+#                                                         #
+###########################################################
 
 class InitialDiscriminatorBlock(tf.keras.layers.Layer):
     def __init__(self, features, kernel_size=(3, 3), avg_pooling=(2, 2), padding="same",
                  name="initial-disc-block", add_noise=True):
+        """
+        Create the first layer of multi-scale discriminator
+        (has a supplementary convolution without act. function from_categ)
+        Args:
+            features: an int that indicates how many filters the convolution should have
+            kernel_size: size of the convolution kernels
+            avg_pooling: average pooling size (reduces the size by that much on each dimension)
+            padding: "same" adds padding, "valid" no padding
+            add_noise: Bool, add Gaussian noise to the input or not
+        """
         super(InitialDiscriminatorBlock, self).__init__()
 
         self.noise_input = add_noise
@@ -44,6 +64,14 @@ class InitialDiscriminatorBlock(tf.keras.layers.Layer):
 
 class DiscriminatorBlock(tf.keras.layers.Layer):
     def __init__(self, features, kernel_size=(3, 3), avg_pooling=(2, 2), padding="same", name="inter-disc-block"):
+        """
+        Create hidden layer of multi-scale discriminator
+        Args:
+            features: an int that indicates how many filters the convolution should have
+            kernel_size: size of the convolution kernels
+            avg_pooling: average pooling size (reduces the size by that much on each dimension)
+            padding: "same" adds padding, "valid" no padding
+        """
         super(DiscriminatorBlock, self).__init__()
 
         self.concat = tf.keras.layers.Concatenate(axis=-1)
@@ -81,6 +109,14 @@ class DiscriminatorBlock(tf.keras.layers.Layer):
 
 class FinalDiscriminatorBlock(tf.keras.layers.Layer):
     def __init__(self, features, kernel_size_1=(3, 3), kernel_size_2=(4, 4), padding="same", name="final-disc-block"):
+        """
+        Create final layer of multi-scale discriminator (it has a dense layer that returns the score of discriminator)
+        Args:
+            features: an int that indicates how many filters the convolution should have
+            kernel_size: size of the convolution kernels
+            avg_pooling: average pooling size (reduces the size by that much on each dimension)
+            padding: "same" adds padding, "valid" no padding
+        """
         super(FinalDiscriminatorBlock, self).__init__()
 
         self.mstd = MinibatchStdev()
@@ -109,11 +145,19 @@ class FinalDiscriminatorBlock(tf.keras.layers.Layer):
 
 
 def get_discriminator_model(input_dims, kernel_size=(3, 3), layers_features=None, add_noise=True):
+    """
+    Discriminator definition. Puts together all the previously defined layers
+    Args:
+        layers_features: a LIST of int that indicates how many filters the convolution should have at each layer
+        kernel_size: size of the convolution kernels
+        add_noise: Bool, add Gaussian noise to the input or not
+    """
     if layers_features is None:
         layers_features = [16, 32, 64, 128, 256]
 
     padding = "same"
-
+    
+    # Multi-Scale inputs
     x_high_res = tf.keras.layers.Input(shape=(input_dims[0], input_dims[1], input_dims[2]))
     x_3 = tf.keras.layers.Input(shape=(int(input_dims[0] / 2), int(input_dims[1] / 2), input_dims[2]))
     x_2 = tf.keras.layers.Input(shape=(int(input_dims[0] / 4), int(input_dims[1] / 4), input_dims[2]))

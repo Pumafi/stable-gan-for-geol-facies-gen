@@ -5,6 +5,14 @@ from tensorflow import image
 
 tf.config.run_functions_eagerly(True)
 
+###########################################################
+#                                                         #
+#            Parametric Multi-Scale GAN                   #
+#                                                         #
+#          This model is not SOTA, and is here for        #
+#                   comparison purposes                   #
+#                                                         #
+###########################################################
 
 def discriminator_loss(real_img, fake_img):
     # Discriminator loss Wasserstein

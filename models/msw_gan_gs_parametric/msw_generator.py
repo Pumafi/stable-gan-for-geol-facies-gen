@@ -1,6 +1,14 @@
 import tensorflow as tf
 from models.progan_normalization import pix_norm
 
+###########################################################
+#                                                         #
+#             Parametric Multi-Scale GENERATOR            #
+#                                                         #
+#          This model is not SOTA, and is here for        #
+#                   comparison purposes                   #
+#                                                         #
+###########################################################
 
 @tf.function
 def parametric_convolution(input_features, filters):
@@ -91,6 +99,9 @@ class GeneratorBlock(tf.keras.layers.Layer):
 
 
 class LastGeneratorBlock(tf.keras.layers.Layer):
+    # Last block of the Multi-Scale Generator model
+    # Same as intermediate blocks, but without the last pix-norm and obviously without skip connection
+    # The resizing method is also changed to bilinear for a smoother result
     def __init__(self, features, output_features, kernel_size=(3, 3), upsampling=(2, 2), padding="valid",
                  name="gen-fin-block"):
         super(LastGeneratorBlock, self).__init__()

@@ -1,8 +1,20 @@
 import tensorflow as tf
 from models.progan_normalization import pix_norm
 
+###########################################################
+#                                                         #
+#         2D Multi-Scale Wasserstein GENERATOR            #
+#        with 1-Lipschitz non-monotonic activations       #
+#              and Spectral Normalisation                 #
+#                                                         #
+#          This model is not SOTA, and is here for        #
+#                   comparison purposes                   #
+#                                                         #
+###########################################################
 
 class GeneratorInitial(tf.keras.layers.Layer):
+    # First layer of the Multi-Scale Generator
+    # It is a simple convolution, but without skip connection, 256 channels and a large kernel size
     def __init__(self, features=256, kernel_size=(9, 9), padding="valid"):
         super(GeneratorInitial, self).__init__()
         self.conv = tf.keras.layers.Conv2D(filters=features, kernel_size=kernel_size,

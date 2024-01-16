@@ -7,6 +7,14 @@ from tensorflow import keras
 from models.progan_normalization import MinibatchStdev
 from models.custom_activation_functions import maxsort
 
+###########################################################
+#                                                         #
+#          Parametric Multi-Scale DISCRIMINATOR           #
+#                                                         #
+#          This model is not SOTA, and is here for        #
+#                   comparison purposes                   #
+#                                                         #
+###########################################################
 
 class StationaryWassersteinApprox(tf.keras.layers.Layer):
     """

@@ -5,6 +5,14 @@ from tensorflow import image
 
 tf.config.run_functions_eagerly(True)
 
+###########################################################
+#                                                         #
+#                    Multi-Scale GAN                      #
+#                                                         #
+#          This model is not SOTA, and is here for        #
+#                   comparison purposes                   #
+#                                                         #
+###########################################################
 
 def discriminator_loss(real_img, fake_img):
     # Discriminator loss, MinMax
@@ -36,6 +44,17 @@ class MSGAN(keras.Model):
             gp_weight=10.0,
             real_image_resize_method=image.ResizeMethod.BILINEAR
     ):
+        """
+        Init the Multi-scale GAN model
+        Args:
+            discriminator: an already created multi-scale discriminator model (multiscale_discriminator.py)
+            generator: an already created multi-scale generator model (multiscale_generator.py)
+            latent_shape: size of the input noise (latent space)
+            discriminator_extra_steps: how many times the discriminator is trained by iteration
+            generator_extra_steps:  how many times the generator is trained by iteration
+            gp_weight: weight of the Gradient Penalty for 1-Lipchitz models (NOT USED)
+            real_image_resize_method: reshape method
+        """
         super(MSGAN, self).__init__()
         self.discriminator = discriminator
         self.generator = generator

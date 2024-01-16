@@ -1,6 +1,16 @@
 import tensorflow as tf
 from models.progan_normalization import pix_norm
 
+###########################################################
+#                                                         #
+#         3D Multi-Scale Wasserstein GENERATOR            #
+#        with 1-Lipschitz non-monotonic activations       #
+#              and Spectral Normalisation                 #
+#                                                         #
+#          This model is not SOTA, and is here for        #
+#                   comparison purposes                   #
+#                                                         #
+###########################################################
 
 class GeneratorInitial(tf.keras.layers.Layer):
     # First layer of the Multi-Scale Generator
